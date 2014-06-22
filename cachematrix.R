@@ -1,15 +1,33 @@
-## Put comments here that give an overall description of what your
-## functions do
+## setmatrix
+##getmatrix
 
-## Write a short comment describing this function
+## calculate inversed matrix, store in setsolve
 
 makeCacheMatrix <- function(x = matrix()) {
-
+        m <- NULL
+        set <- function(y) {
+                x <<- y
+                m <<- NULL
+        }
+        get <- function() x
+        setsolve <- function(solve) m <<- solve
+        getsolve <- function() m
+        list(set = set, get = get,
+             setsolve = setsolve,
+             getsolve = getsolve)
 }
 
 
-## Write a short comment describing this function
+## get matrix, if inversed matrix is not already in makeCacheMatrix, calculate inversed matrix and return it, otherwise return stored inversed matrix
 
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-}
+cacheSolve <- function(x, ...)  {
+        m <- x$getsolve()
+        if(!is.null(m)) {
+                message("getting cached data")
+                return(m)
+        }
+        data <- x$get()
+        m <- solve(data, ...)
+        x$setsolve(m)
+        m
+        }
